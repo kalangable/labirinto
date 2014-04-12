@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>labirinto</groupId>
-  <artifactId>labirinto-project</artifactId>
+  <artifactId>labirinto</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>labirinto-project</name>
+  <name>labirinto</name>
   <url>http://maven.apache.org</url>
 
   <properties>
