@@ -1,13 +1,16 @@
 package br.org.catolicasc.labirinto.gamer;
 
+import br.org.catolicasc.labirinto.core.Controle;
+import br.org.catolicasc.labirinto.view.Labirinto;
+import br.org.catolicasc.labirinto.view.factory.FactoryLabirinto;
+
 /**
  * Hello world!
- *
+ * 
  */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
-    }
+public class App {
+	public static void main(String[] args) {
+		Labirinto labirinto = FactoryLabirinto.createLabirinto(Thread.currentThread().getContextClassLoader().getResourceAsStream("lab001.txt"));
+		new Controle(new Rato(labirinto.getBegin()), labirinto);
+	}
 }
