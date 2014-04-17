@@ -32,6 +32,7 @@ public class Controle {
 	private void run() {
 		tela.atualizar(labirinto);
 		boolean isRunning = true;
+		int isPossibleContinue=0;
 		Cenario[][] cenarioCompleto = this.labirinto.getCenario();
 		Posicao posicaoAtual = cobaia.getPosicao();
 		Posicao posicaoMovimentacao = null;
@@ -40,12 +41,19 @@ public class Controle {
 			// posicaoMovimentacao = cobaia.getPosicao();
 			cobaia.setPosicao(posicaoAtual);
 			System.out.println(posicaoAtual.getPosicaoX() + "  " + posicaoAtual.getPosicaoY());
-			posicaoMovimentacao = cobaia.make(this.labirinto);
-
+			System.out.println(isPossibleContinue);
+			posicaoMovimentacao = cobaia.make(this.labirinto, isPossibleContinue);
+			isPossibleContinue++;
 			Cenario elementoCenarioPosicaoMovimentacao = getCenarioPosicao(cenarioCompleto, posicaoMovimentacao);
 			if (isMove(elementoCenarioPosicaoMovimentacao)) {
+				isPossibleContinue--;
 				cenarioCompleto = executeMove(cenarioCompleto, posicaoAtual, posicaoMovimentacao);
 				posicaoAtual = posicaoMovimentacao;
+			}
+			
+			if(isPossibleContinue==4){
+				System.out.println("problem");
+				isPossibleContinue=0;
 			}
 
 			labirinto.setCenario(cenarioCompleto);

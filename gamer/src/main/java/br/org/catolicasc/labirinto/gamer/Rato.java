@@ -29,9 +29,19 @@ public class Rato extends Roedor {
 	}
 
 	@Override
-	public Posicao game(Labirinto labirinto) {
-
-		return new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY() + 1);
+	public Posicao game(Labirinto labirinto, int isPossibleContinue) {
+		switch(isPossibleContinue){
+		case 0 :
+			return new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY() + 1);
+		case 1:
+			return new Posicao(posicao.getPosicaoX() +1, posicao.getPosicaoY());
+		case 2:
+			return new Posicao(posicao.getPosicaoX() -1, posicao.getPosicaoY() );
+		case 3:
+			return new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY() -1);
+		default:
+			return new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY());
+		}
 	}
 
 }

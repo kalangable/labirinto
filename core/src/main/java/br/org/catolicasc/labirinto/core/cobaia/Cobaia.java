@@ -14,7 +14,7 @@ public interface Cobaia {
 
 	public void setPosicao(Posicao posicao);
 
-	public Posicao make(Labirinto labirinto);
+	public Posicao make(Labirinto labirinto, int isPossibleContinue);
 
 	public void condolence();
 

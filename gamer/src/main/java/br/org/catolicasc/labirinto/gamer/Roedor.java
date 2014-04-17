@@ -16,11 +16,11 @@ public abstract class Roedor implements Cobaia {
 		this.elementoCenario = EnumElementoCenario.COBAIA;
 	}
 
-	public Posicao make(Labirinto labirinto) {
-		Posicao movimente = this.game(labirinto);
+	public Posicao make(Labirinto labirinto, int isPossibleContinue) {
+		Posicao movimente = this.game(labirinto, isPossibleContinue);
 		while (isExtremo(labirinto, movimente)) {
 			System.out.println("Loop");
-			movimente = this.game(labirinto);
+			movimente = this.game(labirinto, isPossibleContinue);
 		}
 		Cenario elementoCenario = labirinto.getCenario()[movimente.getPosicaoX()][movimente.getPosicaoY()];
 		if (elementoCenario instanceof Substancia) {
@@ -78,5 +78,5 @@ public abstract class Roedor implements Cobaia {
 
 	public abstract void eat(Substancia substancia);
 
-	public abstract Posicao game(Labirinto labirinto);
+	public abstract Posicao game(Labirinto labirinto, int isPossibleContinue);
 }
