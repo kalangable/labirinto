@@ -38,7 +38,6 @@ public class Controle {
 		Cenario[][] cenarioCompleto = this.labirinto.getCenario();
 		Posicao posicaoAtual = cobaia.getPosicao();
 		Posicao posicaoMovimentacao = null;
-		Posicao posicaoAnterior = null;
 		this.tempoLimite = DateTime.now().plusMinutes(5);
 		while (isRunning) {
 			// posicaoMovimentacao = cobaia.getPosicao();
@@ -53,9 +52,6 @@ public class Controle {
 				cenarioCompleto = executeMove(cenarioCompleto, posicaoAtual, posicaoMovimentacao);
 				this.memoryList.add(new int[] { posicaoAtual.getPosicaoX(),posicaoAtual.getPosicaoY() });
 				posicaoAtual = posicaoMovimentacao;
-			}
-			else{
-
 			}
 			
 			if(isPossibleContinue==4){
