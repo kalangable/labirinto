@@ -1,6 +1,7 @@
 package br.org.catolicasc.labirinto.core;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
@@ -20,6 +21,7 @@ public class Controle {
 	private Tela tela;
 	private DateTime tempoInicio;
 	private DateTime tempoLimite;
+	ArrayList<int[]> memoryList = new ArrayList<int[]>();
 
 	public Controle(Cobaia cobaia, Labirinto labirinto) {
 		this.cobaia = cobaia;
@@ -36,6 +38,7 @@ public class Controle {
 		Cenario[][] cenarioCompleto = this.labirinto.getCenario();
 		Posicao posicaoAtual = cobaia.getPosicao();
 		Posicao posicaoMovimentacao = null;
+		Posicao posicaoAnterior = null;
 		this.tempoLimite = DateTime.now().plusMinutes(5);
 		while (isRunning) {
 			// posicaoMovimentacao = cobaia.getPosicao();
@@ -45,14 +48,17 @@ public class Controle {
 			posicaoMovimentacao = cobaia.make(this.labirinto, isPossibleContinue);
 			isPossibleContinue++;
 			Cenario elementoCenarioPosicaoMovimentacao = getCenarioPosicao(cenarioCompleto, posicaoMovimentacao);
-			if (isMove(elementoCenarioPosicaoMovimentacao)) {
-				isPossibleContinue--;
+			if (isMove(elementoCenarioPosicaoMovimentacao) && !isInMemory( elementoCenarioPosicaoMovimentacao.getPosicao().getPosicaoX(),elementoCenarioPosicaoMovimentacao.getPosicao().getPosicaoY() )) {
+				//isPossibleContinue--;
 				cenarioCompleto = executeMove(cenarioCompleto, posicaoAtual, posicaoMovimentacao);
+				this.memoryList.add(new int[] { posicaoAtual.getPosicaoX(),posicaoAtual.getPosicaoY() });
 				posicaoAtual = posicaoMovimentacao;
+			}
+			else{
+
 			}
 			
 			if(isPossibleContinue==4){
-				System.out.println("problem");
 				isPossibleContinue=0;
 			}
 
@@ -100,6 +106,17 @@ public class Controle {
 		}
 		return retorno;
 
+	}
+	
+	private boolean isInMemory( int posX,int posY ) {
+
+		for ( int i = 0 ; i < this.memoryList.size() ; i++ ) {
+			if ( this.memoryList.get( i )[0] == posX && this.memoryList.get( i )[1] == posY ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }
