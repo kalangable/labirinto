@@ -13,7 +13,11 @@ import br.org.catolicasc.labirinto.view.Labirinto;
 import br.org.catolicasc.labirinto.view.elemento.Cenario;
 import br.org.catolicasc.labirinto.view.elemento.EnumElementoCenario;
 import br.org.catolicasc.labirinto.view.elemento.Posicao;
-
+/**
+ * Fabrica que cria o labirinto
+ * @author matheus.baade
+ *
+ */
 public class FactoryLabirinto {
 
 	public static Labirinto createLabirinto(File file) {
@@ -29,7 +33,12 @@ public class FactoryLabirinto {
 	public static Labirinto createLabirinto(String file) {
 		return createLabirinto(new File(file));
 	}
-
+	
+	/**
+	 * Cria o labirinto
+	 * @param file
+	 * @return
+	 */
 	public static Labirinto createLabirinto(InputStream file) {
 		Labirinto labirinto = new Labirinto();
 
@@ -68,6 +77,11 @@ public class FactoryLabirinto {
 		return null;
 	}
 
+	/**
+	 * Le o arquivo txt
+	 * @param file
+	 * @return
+	 */
 	private static List<String> readFile(InputStream file) {
 		List<String> linhas = null;
 		try {

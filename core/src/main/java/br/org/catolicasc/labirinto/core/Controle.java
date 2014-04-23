@@ -14,6 +14,11 @@ import br.org.catolicasc.labirinto.view.elemento.Corredor;
 import br.org.catolicasc.labirinto.view.elemento.Estrutura;
 import br.org.catolicasc.labirinto.view.elemento.Posicao;
 
+/**
+ * 
+ * É a classe que gere tudo que acontece.
+ * 
+ */
 public class Controle {
 
 	private Cobaia cobaia;
@@ -23,6 +28,12 @@ public class Controle {
 	private DateTime tempoLimite;
 	ArrayList<int[]> memoryList = new ArrayList<int[]>();
 
+	/**
+	 * É criada a cobaia, labirinto e o contador, chamando a execução
+	 * 
+	 * @param cobaia
+	 * @param labirinto
+	 */
 	public Controle(Cobaia cobaia, Labirinto labirinto) {
 		this.cobaia = cobaia;
 		this.labirinto = labirinto;
@@ -31,10 +42,13 @@ public class Controle {
 		this.run();
 	}
 
+	/**
+	 * Gerencia toda a lógica tanto do rato como do labirinto
+	 */
 	private void run() {
 		tela.atualizar(labirinto);
 		boolean isRunning = true;
-		int isPossibleContinue=0;
+		int isPossibleContinue = 0;
 		Cenario[][] cenarioCompleto = this.labirinto.getCenario();
 		Posicao posicaoAtual = cobaia.getPosicao();
 		Posicao posicaoMovimentacao = null;
@@ -47,15 +61,16 @@ public class Controle {
 			posicaoMovimentacao = cobaia.make(this.labirinto, isPossibleContinue);
 			isPossibleContinue++;
 			Cenario elementoCenarioPosicaoMovimentacao = getCenarioPosicao(cenarioCompleto, posicaoMovimentacao);
-			if (isMove(elementoCenarioPosicaoMovimentacao) && !isInMemory( elementoCenarioPosicaoMovimentacao.getPosicao().getPosicaoX(),elementoCenarioPosicaoMovimentacao.getPosicao().getPosicaoY() )) {
-				//isPossibleContinue--;
+			if (isMove(elementoCenarioPosicaoMovimentacao)
+					&& !isInMemory(elementoCenarioPosicaoMovimentacao.getPosicao().getPosicaoX(), elementoCenarioPosicaoMovimentacao.getPosicao().getPosicaoY())) {
+				// isPossibleContinue--;
 				cenarioCompleto = executeMove(cenarioCompleto, posicaoAtual, posicaoMovimentacao);
-				this.memoryList.add(new int[] { posicaoAtual.getPosicaoX(),posicaoAtual.getPosicaoY() });
+				this.memoryList.add(new int[] { posicaoAtual.getPosicaoX(), posicaoAtual.getPosicaoY() });
 				posicaoAtual = posicaoMovimentacao;
 			}
-			
-			if(isPossibleContinue==4){
-				isPossibleContinue=0;
+
+			if (isPossibleContinue == 4) {
+				isPossibleContinue = 0;
 			}
 
 			labirinto.setCenario(cenarioCompleto);
@@ -74,6 +89,13 @@ public class Controle {
 		}
 	}
 
+	/**
+	 * Faz o rato andar
+	 * @param cenario
+	 * @param posicaoAtual
+	 * @param proximaPosicao
+	 * @return
+	 */
 	private Cenario[][] executeMove(Cenario[][] cenario, Posicao posicaoAtual, Posicao proximaPosicao) {
 		Cenario elementoCenarioPosicaoMovimentacao = getCenarioPosicao(cenario, proximaPosicao);
 		elementoCenarioPosicaoMovimentacao.setElemento(cobaia.getElementoCenario());
@@ -82,16 +104,34 @@ public class Controle {
 		return cenario;
 	}
 
+	/**
+	 * Retorna o que existe na posição
+	 * @param cenario
+	 * @param posicao
+	 * @return
+	 */
 	private Cenario getCenarioPosicao(Cenario[][] cenario, Posicao posicao) {
 
 		return cenario[posicao.getPosicaoX()][posicao.getPosicaoY()];
 	}
 
+	/**
+	 * Seta o que existe na posição
+	 * @param cenario
+	 * @param posicao
+	 * @param cenarioAlterado
+	 * @return
+	 */
 	private Cenario[][] setElementoCenarioPosicao(Cenario[][] cenario, Posicao posicao, Cenario cenarioAlterado) {
 		cenario[posicao.getPosicaoX()][posicao.getPosicaoY()] = cenarioAlterado;
 		return cenario;
 	}
 
+	/**
+	 * Verifica se é possivel mover para aquela direção
+	 * @param cenario
+	 * @return
+	 */
 	private boolean isMove(Cenario cenario) {
 		boolean retorno = true;
 		if (cenario instanceof Estrutura) {
@@ -103,11 +143,17 @@ public class Controle {
 		return retorno;
 
 	}
-	
-	private boolean isInMemory( int posX,int posY ) {
 
-		for ( int i = 0 ; i < this.memoryList.size() ; i++ ) {
-			if ( this.memoryList.get( i )[0] == posX && this.memoryList.get( i )[1] == posY ) {
+	/**
+	 * Verifica se ja passou por aquele local
+	 * @param posX
+	 * @param posY
+	 * @return
+	 */
+	private boolean isInMemory(int posX, int posY) {
+
+		for (int i = 0; i < this.memoryList.size(); i++) {
+			if (this.memoryList.get(i)[0] == posX && this.memoryList.get(i)[1] == posY) {
 				return true;
 			}
 		}

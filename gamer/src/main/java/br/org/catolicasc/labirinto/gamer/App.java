@@ -5,7 +5,7 @@ import br.org.catolicasc.labirinto.view.Labirinto;
 import br.org.catolicasc.labirinto.view.factory.FactoryLabirinto;
 
 /**
- * Hello world!
+ * Inicia o programa
  * 
  */
 public class App {

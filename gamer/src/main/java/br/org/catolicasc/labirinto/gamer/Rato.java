@@ -27,9 +27,11 @@ public class Rato extends Roedor {
 			System.out.println("ARROTANDO!!!!!!!!!!!!!!!!!");
 		}
 	}
+	
 
 	@Override
 	public Posicao game(Labirinto labirinto, int isPossibleContinue) {
+		
 		switch(isPossibleContinue){
 		case 0 :
 			return new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY() + 1);

@@ -7,8 +7,18 @@ import br.org.catolicasc.labirinto.view.elemento.Parede;
 import br.org.catolicasc.labirinto.view.elemento.Posicao;
 import br.org.catolicasc.labirinto.view.elemento.Remedio;
 import br.org.catolicasc.labirinto.view.elemento.Veneno;
-
+/**
+ * Fabrica que cria elementos no cenario
+ * @author matheus.baade
+ *
+ */
 public class FactoryElementoCenario {
+	/**
+	 * Cria um elemento de cenario
+	 * @param caracter
+	 * @param posicao
+	 * @return
+	 */
 	public static Cenario createElemento(char caracter, Posicao posicao) {
 		EnumElementoCenario elementoCenario = null;
 		Cenario cenario = null;

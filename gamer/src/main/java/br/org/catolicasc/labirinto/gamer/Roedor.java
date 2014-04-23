@@ -8,14 +8,26 @@ import br.org.catolicasc.labirinto.view.elemento.EnumElementoCenario;
 import br.org.catolicasc.labirinto.view.elemento.Posicao;
 import br.org.catolicasc.labirinto.view.elemento.Substancia;
 
+/**
+ * Classe abstrata de rato que vai implementar uma cobaia
+ * @author matheus.baade
+ *
+ */
 public abstract class Roedor implements Cobaia {
 
+	/**
+	 * Construtor da classe
+	 * @param posicao
+	 */
 	public Roedor(Posicao posicao) {
 		this.posicao = posicao;
 		this.energia = new Energia();
 		this.elementoCenario = EnumElementoCenario.COBAIA;
 	}
 
+	/**
+	 * Ação do rato
+	 */
 	public Posicao make(Labirinto labirinto, int isPossibleContinue) {
 		Posicao movimente = this.game(labirinto, isPossibleContinue);
 		while (isExtremo(labirinto, movimente)) {
@@ -31,8 +43,11 @@ public abstract class Roedor implements Cobaia {
 		return movimente;
 	}
 
+	/**
+	 * Executa a mutação do rato
+	 */
 	private void executeMutacao() {
-		if (this.energia.getEnergia() >= 10) {
+		if (this.energia.getEnergia() >= 30) {
 			this.setElementoCenario(EnumElementoCenario.MUTACAO);
 		}
 	}
@@ -40,14 +55,24 @@ public abstract class Roedor implements Cobaia {
 	protected Energia energia;
 	protected Posicao posicao;
 
+	/**
+	 * Retorna a energia
+	 * @return
+	 */
 	public Energia getEnergia() {
 		return energia;
 	}
 
+	/**
+	 * Retorna a posição 
+	 */
 	public Posicao getPosicao() {
 		return this.posicao;
 	}
 
+	/**
+	 * Seta a posição
+	 */
 	public void setPosicao(Posicao posicao) {
 		this.posicao = posicao;
 
@@ -55,16 +80,28 @@ public abstract class Roedor implements Cobaia {
 
 	protected EnumElementoCenario elementoCenario;
 
+	/**
+	 * Seta um elemento no cenario
+	 */
 	public void setElementoCenario(EnumElementoCenario elementoCenario) {
 		this.elementoCenario = elementoCenario;
 
 	}
 
+	/**
+	 * Retorna um elemento do cenario
+	 */
 	public EnumElementoCenario getElementoCenario() {
 		// TODO Auto-generated method stub
 		return this.elementoCenario;
 	}
 
+	/**
+	 * Verifica se é um extremo do labirinto a posição atual
+	 * @param labirinto
+	 * @param posicao
+	 * @return
+	 */
 	private boolean isExtremo(Labirinto labirinto, Posicao posicao) {
 		boolean retorno = true;
 		if (posicao.getPosicaoX() <= labirinto.getCenario().length) {

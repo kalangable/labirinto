@@ -1,8 +1,16 @@
 package br.org.catolicasc.labirinto.view.elemento;
 
-
+/**
+ * Classe cenario onde são colocados todos os elementos
+ * @author matheus.baade
+ *
+ */
 public class Cenario {
 
+	/**
+	 * Construtor da classe
+	 * @param posicao
+	 */
 	protected Cenario(Posicao posicao) {
 		this.posicao = posicao;
 	}
@@ -10,18 +18,34 @@ public class Cenario {
 	private Posicao posicao;
 	private EnumElementoCenario elemento;
 
+	/**
+	 * Retorna o elemento na posição do cenario
+	 * @return
+	 */
 	public EnumElementoCenario getElemento() {
 		return elemento;
 	}
 
+	/**
+	 * Coloca um elemento em uma posição do cenario
+	 * @param elemento
+	 */
 	public void setElemento(EnumElementoCenario elemento) {
 		this.elemento = elemento;
 	}
 
+	/**
+	 * Retorna a posição atual
+	 * @return
+	 */
 	public Posicao getPosicao() {
 		return posicao;
 	}
 
+	/**
+	 * Seta a posição atual
+	 * @param posicao
+	 */
 	public void setPosicao(Posicao posicao) {
 		this.posicao = posicao;
 	}
