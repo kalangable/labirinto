@@ -44,7 +44,9 @@ public class FactoryLabirinto {
 
 		List<String> arquivoListado = readFile(file);
 
-		Cenario[][] cenarioCompleto = new Cenario[arquivoListado.size()][arquivoListado.get(0).length()];
+		labirinto.setAltura(arquivoListado.size());
+		labirinto.setLargura(arquivoListado.get(0).length());
+		Cenario[][] cenarioCompleto = new Cenario[labirinto.getAltura()][labirinto.getLargura()];
 
 		for (int i = 0; i < arquivoListado.size(); i++) {
 			for (int j = 0; j < arquivoListado.get(i).length(); j++) {
