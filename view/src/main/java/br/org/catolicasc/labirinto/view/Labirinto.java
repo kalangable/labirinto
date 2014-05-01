@@ -13,6 +13,14 @@ public class Labirinto {
 	private Posicao exit;
 	private Posicao begin;
 
+	private int largura;
+	private int altura;
+
+	private Cenario elementoCenario;
+
+	public boolean isValidCenario(Posicao posicao) {
+		return (posicao.getPosicaoX() < this.getAltura() && posicao.getPosicaoY() < this.getLargura());
+	}
 	/**
 	 * Retorna a Posição inicial
 	 * @return
@@ -59,6 +67,26 @@ public class Labirinto {
 	 */
 	public void setExit(Posicao exit) {
 		this.exit = exit;
+	}
+
+	public int getLargura() {
+		return largura;
+	}
+
+	public void setLargura(int largura) {
+		this.largura = largura;
+	}
+
+	public int getAltura() {
+		return altura;
+	}
+
+	public void setAltura(int altura) {
+		this.altura = altura;
+	}
+
+	public Cenario getElementoCenario(Posicao posicao) {
+		return this.getCenario()[posicao.getPosicaoX()][posicao.getPosicaoY()];
 	}
 
 }
