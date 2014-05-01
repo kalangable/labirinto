@@ -27,6 +27,8 @@ public class Controle {
 	private DateTime tempoInicio;
 	private DateTime tempoLimite;
 	ArrayList<int[]> memoryList = new ArrayList<int[]>();
+	static final int ESQUERDA = 0;
+	static final int SEMCAMINHO = 0;
 
 	/**
 	 * É criada a cobaia, labirinto e o contador, chamando a execução
@@ -48,7 +50,7 @@ public class Controle {
 	private void run() {
 		tela.atualizar(labirinto);
 		boolean isRunning = true;
-		int isPossibleContinue = 0;
+		int direcaoMovimentacao = ESQUERDA;
 		Cenario[][] cenarioCompleto = this.labirinto.getCenario();
 		Posicao posicaoAtual = cobaia.getPosicao();
 		Posicao posicaoMovimentacao = null;
@@ -57,9 +59,9 @@ public class Controle {
 			// posicaoMovimentacao = cobaia.getPosicao();
 			cobaia.setPosicao(posicaoAtual);
 			System.out.println(posicaoAtual.getPosicaoX() + "  " + posicaoAtual.getPosicaoY());
-			System.out.println(isPossibleContinue);
-			posicaoMovimentacao = cobaia.make(this.labirinto, isPossibleContinue);
-			isPossibleContinue++;
+			System.out.println(direcaoMovimentacao);
+			posicaoMovimentacao = cobaia.make(this.labirinto, direcaoMovimentacao);
+			direcaoMovimentacao++;
 			Cenario elementoCenarioPosicaoMovimentacao = getCenarioPosicao(cenarioCompleto, posicaoMovimentacao);
 			if (isMove(elementoCenarioPosicaoMovimentacao)
 					&& !isInMemory(elementoCenarioPosicaoMovimentacao.getPosicao().getPosicaoX(), elementoCenarioPosicaoMovimentacao.getPosicao().getPosicaoY())) {
@@ -69,8 +71,8 @@ public class Controle {
 				posicaoAtual = posicaoMovimentacao;
 			}
 
-			if (isPossibleContinue == 4) {
-				isPossibleContinue = 0;
+			if (direcaoMovimentacao == SEMCAMINHO) { //Removido numero magicos
+				direcaoMovimentacao = ESQUERDA; //Removido numero magicos
 			}
 
 			labirinto.setCenario(cenarioCompleto);
