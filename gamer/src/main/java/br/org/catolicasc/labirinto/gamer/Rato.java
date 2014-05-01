@@ -6,6 +6,11 @@ import br.org.catolicasc.labirinto.view.elemento.Remedio;
 import br.org.catolicasc.labirinto.view.elemento.Substancia;
 
 public class Rato extends Roedor {
+	
+	static final int ESQUERDA = 0;
+	static final int CIMA = 1;
+	static final int DIREITA = 2;
+	static final int BAIXO = 3;
 
 	public Rato(Posicao posicao) {
 		super(posicao);
@@ -33,13 +38,13 @@ public class Rato extends Roedor {
 	public Posicao game(Labirinto labirinto, int isPossibleContinue) {
 		
 		switch(isPossibleContinue){
-		case 0 :
+		case ESQUERDA :
 			return new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY() + 1);
-		case 1:
+		case CIMA:
 			return new Posicao(posicao.getPosicaoX() +1, posicao.getPosicaoY());
-		case 2:
+		case DIREITA:
 			return new Posicao(posicao.getPosicaoX() -1, posicao.getPosicaoY() );
-		case 3:
+		case BAIXO:
 			return new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY() -1);
 		default:
 			return new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY());
