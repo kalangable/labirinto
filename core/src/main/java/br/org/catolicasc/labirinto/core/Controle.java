@@ -24,7 +24,6 @@ public class Controle {
 	private Cobaia cobaia;
 	private Labirinto labirinto;
 	private Tela tela;
-	private DateTime tempoInicio;
 	private DateTime tempoLimite;
 	ArrayList<int[]> memoryList = new ArrayList<int[]>();
 	static final int ESQUERDA = 0;
@@ -41,7 +40,6 @@ public class Controle {
 		this.cobaia = cobaia;
 		this.labirinto = labirinto;
 		this.tela = Tela.getInstance();
-		this.tempoInicio = DateTime.now();
 		this.run();
 	}
 
