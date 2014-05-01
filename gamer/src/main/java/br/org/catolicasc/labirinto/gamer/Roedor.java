@@ -15,6 +15,8 @@ import br.org.catolicasc.labirinto.view.elemento.Substancia;
  */
 public abstract class Roedor implements Cobaia {
 
+	static final int ENERGIAMUTACAO = 30;
+	
 	/**
 	 * Construtor da classe
 	 * @param posicao
@@ -47,7 +49,7 @@ public abstract class Roedor implements Cobaia {
 	 * Executa a mutação do rato
 	 */
 	private void executeMutacao() {
-		if (this.energia.getEnergia() >= 30) {
+		if (this.energia.getEnergia() >= ENERGIAMUTACAO) { //Removido número mágico
 			this.setElementoCenario(EnumElementoCenario.MUTACAO);
 		}
 	}
