@@ -29,6 +29,7 @@ public class Controle {
 	ArrayList<int[]> memoryList = new ArrayList<int[]>();
 	static final int ESQUERDA = 0;
 	static final int SEMCAMINHO = 0;
+	static final int TEMPOLIMITE = 5;
 
 	/**
 	 * É criada a cobaia, labirinto e o contador, chamando a execução
@@ -54,7 +55,7 @@ public class Controle {
 		Cenario[][] cenarioCompleto = this.labirinto.getCenario();
 		Posicao posicaoAtual = cobaia.getPosicao();
 		Posicao posicaoMovimentacao = null;
-		this.tempoLimite = DateTime.now().plusMinutes(5);
+		this.tempoLimite = DateTime.now().plusMinutes(TEMPOLIMITE);//Removido número mágico
 		while (isRunning) {
 			// posicaoMovimentacao = cobaia.getPosicao();
 			cobaia.setPosicao(posicaoAtual);
