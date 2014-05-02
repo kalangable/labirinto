@@ -27,7 +27,7 @@ public class Controle {
 	private DateTime tempoLimite;
 	ArrayList<int[]> memoryList = new ArrayList<int[]>();
 	static final int ESQUERDA = 0;
-	static final int SEMCAMINHO = 0;
+	static final int SEMCAMINHO = 4;
 	static final int TEMPOLIMITE = 5;
 
 	/**
