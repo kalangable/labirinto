@@ -1,8 +1,9 @@
 package br.org.catolicasc.labirinto.core;
 
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Scanner;
 
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 
@@ -20,7 +21,7 @@ import br.org.catolicasc.labirinto.view.elemento.Posicao;
  * 
  */
 public class Controle {
-
+	private static final Logger LOG = Logger.getLogger(Controle.class);
 	private Cobaia cobaia;
 	private Labirinto labirinto;
 	private Tela tela;
@@ -53,12 +54,14 @@ public class Controle {
 		Cenario[][] cenarioCompleto = this.labirinto.getCenario();
 		Posicao posicaoAtual = cobaia.getPosicao();
 		Posicao posicaoMovimentacao = null;
-		this.tempoLimite = DateTime.now().plusMinutes(TEMPOLIMITE);//Removido número mágico
+		this.tempoLimite = DateTime.now().plusMinutes(TEMPOLIMITE);// Removido
+																	// número
+																	// mágico
 		while (isRunning) {
 			// posicaoMovimentacao = cobaia.getPosicao();
 			cobaia.setPosicao(posicaoAtual);
-			System.out.println(posicaoAtual.getPosicaoX() + "  " + posicaoAtual.getPosicaoY());
-			System.out.println(direcaoMovimentacao);
+			LOG.debug(posicaoAtual.getPosicaoX() + "  " + posicaoAtual.getPosicaoY());
+			LOG.debug(direcaoMovimentacao);
 			posicaoMovimentacao = cobaia.make(this.labirinto, direcaoMovimentacao);
 			direcaoMovimentacao++;
 			Cenario elementoCenarioPosicaoMovimentacao = getCenarioPosicao(cenarioCompleto, posicaoMovimentacao);
@@ -70,8 +73,8 @@ public class Controle {
 				posicaoAtual = posicaoMovimentacao;
 			}
 
-			if (direcaoMovimentacao == SEMCAMINHO) { //Removido numero magicos
-				direcaoMovimentacao = ESQUERDA; //Removido numero magicos
+			if (direcaoMovimentacao == SEMCAMINHO) { // Removido numero magicos
+				direcaoMovimentacao = ESQUERDA; // Removido numero magicos
 			}
 
 			labirinto.setCenario(cenarioCompleto);
@@ -80,7 +83,7 @@ public class Controle {
 				cobaia.celebrate();
 				isRunning = false;
 			}
-			System.out.println(Minutes.minutesBetween(DateTime.now(), tempoLimite).getMinutes());
+			LOG.debug(Minutes.minutesBetween(DateTime.now(), tempoLimite).getMinutes());
 			if (Minutes.minutesBetween(DateTime.now(), tempoLimite).getMinutes() < 0) {
 				cobaia.condolence();
 				isRunning = false;
@@ -92,6 +95,7 @@ public class Controle {
 
 	/**
 	 * Faz o rato andar
+	 * 
 	 * @param cenario
 	 * @param posicaoAtual
 	 * @param proximaPosicao
@@ -107,6 +111,7 @@ public class Controle {
 
 	/**
 	 * Retorna o que existe na posição
+	 * 
 	 * @param cenario
 	 * @param posicao
 	 * @return
@@ -118,6 +123,7 @@ public class Controle {
 
 	/**
 	 * Seta o que existe na posição
+	 * 
 	 * @param cenario
 	 * @param posicao
 	 * @param cenarioAlterado
@@ -130,6 +136,7 @@ public class Controle {
 
 	/**
 	 * Verifica se é possivel mover para aquela direção
+	 * 
 	 * @param cenario
 	 * @return
 	 */
@@ -147,6 +154,7 @@ public class Controle {
 
 	/**
 	 * Verifica se ja passou por aquele local
+	 * 
 	 * @param posX
 	 * @param posY
 	 * @return
