@@ -2,46 +2,45 @@ package br.org.catolicasc.labirinto.view.factory;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 
 import br.org.catolicasc.labirinto.view.Labirinto;
 import br.org.catolicasc.labirinto.view.elemento.Cenario;
 import br.org.catolicasc.labirinto.view.elemento.EnumElementoCenario;
 import br.org.catolicasc.labirinto.view.elemento.Posicao;
+
 /**
  * Fabrica que cria o labirinto
+ * 
  * @author matheus.baade
- *
+ * 
  */
 public class FactoryLabirinto {
 
-	public static Labirinto createLabirinto(File file) {
-		try {
-			return createLabirinto(new FileInputStream(file));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+	private static final Logger LOG = Logger.getLogger(FactoryLabirinto.class);
+
+	public static Labirinto createLabirinto(File file) throws IOException {
+		return createLabirinto(new FileInputStream(file));
 	}
 
-	public static Labirinto createLabirinto(String file) {
+	public static Labirinto createLabirinto(String file) throws IOException {
 		return createLabirinto(new File(file));
 	}
-	
+
 	/**
 	 * Cria o labirinto
+	 * 
 	 * @param file
 	 * @return
+	 * @throws IOException
 	 */
-	public static Labirinto createLabirinto(InputStream file) {
+	public static Labirinto createLabirinto(InputStream file) throws IOException {
 		Labirinto labirinto = new Labirinto();
-
 		List<String> arquivoListado = readFile(file);
 
 		labirinto.setAltura(arquivoListado.size());
@@ -65,37 +64,23 @@ public class FactoryLabirinto {
 		return labirinto;
 	}
 
-	private static List<String> readFile(String file) {
+	private static List<String> readFile(String file) throws IOException {
 		return readFile(new File(file));
 	}
 
-	private static List<String> readFile(File file) {
-		try {
-			return readFile(new FileInputStream(file));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+	private static List<String> readFile(File file) throws IOException {
+		return readFile(new FileInputStream(file));
 	}
 
 	/**
 	 * Le o arquivo txt
+	 * 
 	 * @param file
 	 * @return
+	 * @throws IOException
 	 */
-	private static List<String> readFile(InputStream file) {
-		List<String> linhas = null;
-		try {
-			linhas = IOUtils.readLines(file);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return linhas;
+	private static List<String> readFile(InputStream file) throws IOException {
+		return IOUtils.readLines(file);
 	}
 
 }
