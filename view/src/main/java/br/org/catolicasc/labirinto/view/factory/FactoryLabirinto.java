@@ -24,25 +24,8 @@ public class FactoryLabirinto {
 
 	private static final Logger LOG = Logger.getLogger(FactoryLabirinto.class);
 
-	public static Labirinto createLabirinto(File file) throws IOException {
-		return createLabirinto(new FileInputStream(file));
-	}
-
-	public static Labirinto createLabirinto(String file) throws IOException {
-		return createLabirinto(new File(file));
-	}
-
-	/**
-	 * Cria o labirinto
-	 * 
-	 * @param file
-	 * @return
-	 * @throws IOException
-	 */
-	public static Labirinto createLabirinto(InputStream file) throws IOException {
+	private static Labirinto montandoLabirinto(List<String> arquivoListado) {
 		Labirinto labirinto = new Labirinto();
-		List<String> arquivoListado = readFile(file);
-
 		labirinto.setAltura(arquivoListado.size());
 		labirinto.setLargura(arquivoListado.get(0).length());
 		Cenario[][] cenarioCompleto = new Cenario[labirinto.getAltura()][labirinto.getLargura()];
@@ -64,10 +47,56 @@ public class FactoryLabirinto {
 		return labirinto;
 	}
 
-	private static List<String> readFile(String file) throws IOException {
-		return readFile(new File(file));
+	/**
+	 * Cria o labirinto
+	 * 
+	 * @return Labirinto com todos os valore setados, inicio, fim, cenario e
+	 *         Cobaia
+	 * @throws IOException
+	 */
+
+	public static Labirinto createLabirinto(File file) throws IOException {
+		return montandoLabirinto(readFile(file));
 	}
 
+	/**
+	 * Cria o labirinto
+	 * 
+	 * @return Labirinto com todos os valore setados, inicio, fim, cenario e
+	 *         Cobaia
+	 * @throws IOException
+	 */
+	public static Labirinto createLabirinto(String string) throws IOException {
+		return montandoLabirinto(readFile(string));
+	}
+
+	/**
+	 * Cria o labirinto
+	 * 
+	 * @return Labirinto com todos os valore setados, inicio, fim, cenario e
+	 *         Cobaia
+	 * @throws IOException
+	 */
+	public static Labirinto createLabirinto(InputStream inputStream) throws IOException {
+		return montandoLabirinto(readFile(inputStream));
+	}
+
+	/**
+	 * Le o arquivo txt
+	 * 
+	 * @return Lista com todas as linhas do arquivo
+	 * @throws IOException
+	 */
+	private static List<String> readFile(String string) throws IOException {
+		return readFile(new File(string));
+	}
+
+	/**
+	 * Le o arquivo txt
+	 * 
+	 * @return Lista com todas as linhas do arquivo
+	 * @throws IOException
+	 */
 	private static List<String> readFile(File file) throws IOException {
 		return readFile(new FileInputStream(file));
 	}
@@ -75,12 +104,11 @@ public class FactoryLabirinto {
 	/**
 	 * Le o arquivo txt
 	 * 
-	 * @param file
-	 * @return
+	 * @return Lista com todas as linhas do arquivo
 	 * @throws IOException
 	 */
-	private static List<String> readFile(InputStream file) throws IOException {
-		return IOUtils.readLines(file);
+	private static List<String> readFile(InputStream inputStream) throws IOException {
+		return IOUtils.readLines(inputStream);
 	}
 
 }
