@@ -12,10 +12,11 @@ import br.org.catolicasc.labirinto.view.factory.FactoryLabirinto;
  * 
  */
 public class App {
-//	static {
-//		PropertyConfigurator.configure(Thread.currentThread().getContextClassLoader().getResource("log4j.properties"));
-//	}
+	static {
+		PropertyConfigurator.configure(Thread.currentThread().getContextClassLoader().getResource("log4j.properties"));
+	}
 	private static final Logger LOG = Logger.getLogger(App.class);
+
 	public static void main(String[] args) {
 		LOG.debug("Start da Aplicação");
 		Labirinto labirinto = FactoryLabirinto.createLabirinto(Thread.currentThread().getContextClassLoader().getResourceAsStream("lab001.txt"));
