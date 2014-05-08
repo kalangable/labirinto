@@ -1,2 +1,3 @@
-labirinto
+Labirinto
 =========
+
