@@ -1,9 +1,6 @@
 package br.org.catolicasc.labirinto.layout.generics;
 
-/**
- * Hello world!
- * 
- */
+
 public class App {
 	public static void main(String[] args) {
 		ElementMaze ele = EnumMaze.START;

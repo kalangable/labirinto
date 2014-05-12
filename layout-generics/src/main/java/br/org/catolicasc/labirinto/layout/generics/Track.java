@@ -6,6 +6,10 @@ public class Track extends SettingMaze implements ComponentMaze<EnumMaze> {
 		super(position);
 	}
 
+	public Track(int positionX, int positionY) {
+		super(positionX, positionY);
+	}
+
 	@Override
 	public EnumMaze getType() {
 		// TODO Auto-generated method stub

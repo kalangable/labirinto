@@ -1,6 +1,14 @@
 package br.org.catolicasc.labirinto.layout.generics;
 
-public class Wall implements ComponentMaze<EnumMaze> {
+public class Wall extends SettingMaze implements ComponentMaze<EnumMaze> {
+
+	public Wall(Position position) {
+		super(position);
+	}
+
+	public Wall(int positionX, int positionY) {
+		super(positionX, positionY);
+	}
 
 	@Override
 	public EnumMaze getType() {
