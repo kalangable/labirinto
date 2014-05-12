@@ -1,28 +1,19 @@
 package br.org.catolicasc.labirinto.layout.generics;
 
-public class Poison implements ComponenteSubstance {
+public class Poison implements ComponentSubstance {
 
-	private EnumSubtance element;
-
-	public Poison(Position posicao) {
-		this.set(EnumSubtance.POISON);
+	@Override
+	public EnumSubtance getType() {
+		return EnumSubtance.POISON;
 	}
 
 	@Override
-	public EnumSubtance get() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void set(EnumSubtance t) {
-		this.element = t;
-
+	public boolean isWall() {
+		return false;
 	}
 
 	@Override
 	public boolean isSmell() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 

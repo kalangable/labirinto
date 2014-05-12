@@ -1,6 +1,6 @@
 package br.org.catolicasc.labirinto.layout.generics;
 
-public interface ComponenteSubstance extends ComponenteLabirinto<EnumSubtance> {
+public interface ComponentSubstance extends ComponentMaze<EnumSubtance> {
 
 	public boolean isSmell();
 

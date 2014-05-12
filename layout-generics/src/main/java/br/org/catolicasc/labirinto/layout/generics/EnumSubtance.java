@@ -11,7 +11,8 @@ public enum EnumSubtance implements ElementMaze<Character> {
 	}
 
 	@Override
-	public Character get() {
+	public Character getElement() {
+		// TODO Auto-generated method stub
 		return this.character;
 	}
 
