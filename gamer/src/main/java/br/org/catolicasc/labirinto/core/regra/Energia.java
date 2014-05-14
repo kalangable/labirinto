@@ -40,11 +40,11 @@ public class Energia {
 	}
 
 	/**
-	 * Adiciona mais 10 de energia
+	 * Adiciona mais energiaPlus de energia
 	 * @param energiaPlus
 	 */
-	public void add(Energia energiaPlus) {
-		this.energia += energiaPlus.getEnergia();
+	public void add(int energiaPlus) {
+		this.energia += energiaPlus;
 	}
 
 }

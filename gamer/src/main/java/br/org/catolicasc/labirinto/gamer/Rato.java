@@ -30,6 +30,11 @@ public class Rato extends Roedor {
 	public void eat(Substancia substancia) {
 		if (substancia instanceof Remedio) {
 			System.out.println("ARROTANDO!!!!!!!!!!!!!!!!!");
+			super.energia.add(10);
+		}
+		else{
+			condolence();
+			System.exit(0);
 		}
 	}
 	

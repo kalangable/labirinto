@@ -1,5 +1,8 @@
 package br.org.catolicasc.labirinto.gamer;
 
+import org.apache.log4j.Logger;
+
+import br.org.catolicasc.labirinto.core.Controle;
 import br.org.catolicasc.labirinto.core.cobaia.Cobaia;
 import br.org.catolicasc.labirinto.core.regra.Energia;
 import br.org.catolicasc.labirinto.view.Labirinto;
@@ -16,6 +19,7 @@ import br.org.catolicasc.labirinto.view.elemento.Substancia;
 public abstract class Roedor implements Cobaia {
 
 	static final int ENERGIAMUTACAO = 30;
+	private static final Logger LOG = Logger.getLogger(Roedor.class);
 	
 	/**
 	 * Construtor da classe
@@ -49,7 +53,8 @@ public abstract class Roedor implements Cobaia {
 	 * Executa a mutação do rato
 	 */
 	private void executeMutacao() {
-		if (this.energia.getEnergia() >= ENERGIAMUTACAO) { //Removido número mágico
+		LOG.fatal(this.energia.getEnergia());
+		if (energia.getEnergia() >= ENERGIAMUTACAO) { //Removido número mágico
 			this.setElementoCenario(EnumElementoCenario.MUTACAO);
 		}
 	}
