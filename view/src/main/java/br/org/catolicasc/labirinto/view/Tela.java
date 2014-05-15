@@ -1,5 +1,9 @@
 package br.org.catolicasc.labirinto.view;
 
+import java.io.IOException;
+
+import org.apache.log4j.Logger;
+
 import br.org.catolicasc.labirinto.view.elemento.Cenario;
 
 /**
@@ -9,6 +13,8 @@ import br.org.catolicasc.labirinto.view.elemento.Cenario;
  */
 public class Tela {
 
+	private static final Logger LOG = Logger.getLogger(Tela.class);
+	
 	/**
 	 * Construtor da classe
 	 */
@@ -32,12 +38,20 @@ public class Tela {
 	 */
 	public void atualizar(Labirinto labirinto) {
 
-		for (Cenario[] cenarioX : labirinto.getCenario()) {
-			for (Cenario cenario : cenarioX) {
-				System.out.print(cenario.getElemento().getCaracter());
-			}
-			System.out.println();
+
+		MazeFrame mazeFrame = MazeFrame.instnceOf();
+		try {
+			mazeFrame.createFrame(labirinto.getCenario());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			LOG.fatal(e);
 		}
+//		for (Cenario[] cenarioX : labirinto.getCenario()) {
+//			for (Cenario cenario : cenarioX) {
+//				System.out.print(cenario.getElemento().getCaracter());
+//			}
+//			System.out.println();
+//		}
 	}
 
 }
