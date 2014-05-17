@@ -1,4 +1,6 @@
-package br.org.catolicasc.labirinto.layout.generics;
+package br.org.catolicasc.labirinto.layout.generics.console;
+
+import br.org.catolicasc.labirinto.layout.generics.ElementMaze;
 
 public enum EnumMaze implements ElementMaze<Character> {
 

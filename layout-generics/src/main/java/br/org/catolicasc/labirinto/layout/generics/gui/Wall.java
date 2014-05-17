@@ -1,4 +1,8 @@
-package br.org.catolicasc.labirinto.layout.generics;
+package br.org.catolicasc.labirinto.layout.generics.gui;
+
+import br.org.catolicasc.labirinto.layout.generics.ComponentMaze;
+import br.org.catolicasc.labirinto.layout.generics.Position;
+import br.org.catolicasc.labirinto.layout.generics.SettingMaze;
 
 public class Wall extends SettingMaze implements ComponentMaze<EnumMaze> {
 

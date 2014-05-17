@@ -1,4 +1,8 @@
-package br.org.catolicasc.labirinto.layout.generics;
+package br.org.catolicasc.labirinto.layout.generics.console;
+
+import br.org.catolicasc.labirinto.layout.generics.ComponentSubstance;
+import br.org.catolicasc.labirinto.layout.generics.Position;
+import br.org.catolicasc.labirinto.layout.generics.SettingMaze;
 
 public class Poison extends SettingMaze implements ComponentSubstance {
 

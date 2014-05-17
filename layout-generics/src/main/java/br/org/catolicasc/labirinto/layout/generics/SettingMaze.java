@@ -1,5 +1,6 @@
 package br.org.catolicasc.labirinto.layout.generics;
 
+
 public abstract class SettingMaze {
 
 	private Position position;
