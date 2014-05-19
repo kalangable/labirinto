@@ -43,5 +43,6 @@
 		<module>view</module>
 		<module>gamer</module>
     <module>layout-generics</module>
+    <module>core-generics</module>
   </modules>
 </project>
