@@ -4,7 +4,7 @@ import br.org.catolicasc.labirinto.layout.generics.ComponentSubstance;
 import br.org.catolicasc.labirinto.layout.generics.Position;
 import br.org.catolicasc.labirinto.layout.generics.SettingMaze;
 
-public class Aid<E> extends SettingMaze implements ComponentSubstance<EnumSubtance> {
+public class Aid extends SettingMaze implements ComponentSubstance<EnumSubtance> {
 
 	public Aid(Position position) {
 		super(position);

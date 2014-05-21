@@ -4,6 +4,8 @@ import br.org.catolicasc.labirinto.layout.generics.ComponentSubstance;
 import br.org.catolicasc.labirinto.layout.generics.Position;
 import br.org.catolicasc.labirinto.layout.generics.SettingMaze;
 
+
+
 public class Aid extends SettingMaze implements ComponentSubstance<EnumSubtance> {
 
 	public Aid(Position position) {
@@ -14,10 +16,6 @@ public class Aid extends SettingMaze implements ComponentSubstance<EnumSubtance>
 		super(positionX, positionY);
 	}
 
-	@Override
-	public EnumSubtance getType() {
-		return EnumSubtance.AID;
-	}
 
 	@Override
 	public boolean isWall() {
@@ -27,6 +25,12 @@ public class Aid extends SettingMaze implements ComponentSubstance<EnumSubtance>
 	@Override
 	public boolean isSmell() {
 		return false;
+	}
+
+	@Override
+	public br.org.catolicasc.labirinto.layout.generics.console.EnumSubtance getType() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
