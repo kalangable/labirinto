@@ -1,23 +1,37 @@
 package br.org.catolicasc.labirinto.gamer;
 
+import java.util.ArrayDeque;
+import java.util.Queue;
+import java.util.Stack;
+
+import javax.swing.JOptionPane;
+
+import org.apache.log4j.Logger;
+
 import br.org.catolicasc.labirinto.view.Labirinto;
+import br.org.catolicasc.labirinto.view.elemento.Cenario;
 import br.org.catolicasc.labirinto.view.elemento.Posicao;
 import br.org.catolicasc.labirinto.view.elemento.Remedio;
 import br.org.catolicasc.labirinto.view.elemento.Substancia;
+import br.org.catolicasc.labirinto.view.elemento.Veneno;
 
 public class Rato extends Roedor {
-	
+
+	private static final Logger LOG = Logger.getLogger(Rato.class);
 	static final int ESQUERDA = 0;
-	static final int CIMA = 1;
+	static final int BAIXO = 1;
 	static final int DIREITA = 2;
-	static final int BAIXO = 3;
+	static final int CIMA = 3;
+
+	private Stack<Posicao> qPosicaos = new Stack<Posicao>();
 
 	public Rato(Posicao posicao) {
 		super(posicao);
 	}
 
 	public void condolence() {
-		System.out.println("Oh No!!!!!");
+		new Morte();
+		JOptionPane.showMessageDialog(null, "Game Over", "Finalizando", JOptionPane.CLOSED_OPTION);
 
 	}
 
@@ -29,31 +43,59 @@ public class Rato extends Roedor {
 	@Override
 	public void eat(Substancia substancia) {
 		if (substancia instanceof Remedio) {
-			System.out.println("ARROTANDO!!!!!!!!!!!!!!!!!");
+			new Arroto();
 			super.energia.add(10);
-		}
-		else{
+		} else {
 			condolence();
 			System.exit(0);
 		}
 	}
-	
 
 	@Override
 	public Posicao game(Labirinto labirinto, int isPossibleContinue) {
-		
-		switch(isPossibleContinue){
-		case ESQUERDA :
-			return new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY() + 1);
+
+		LOG.info(isPossibleContinue);
+
+		int direcaoMovimentacao = isPossibleContinue;
+		Posicao movimente = null;
+		switch (direcaoMovimentacao) {
+		case ESQUERDA:
+			movimente = new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY() + 1);
+			break;
 		case CIMA:
-			return new Posicao(posicao.getPosicaoX() +1, posicao.getPosicaoY());
+			movimente = new Posicao(posicao.getPosicaoX() + 1, posicao.getPosicaoY());
+			break;
 		case DIREITA:
-			return new Posicao(posicao.getPosicaoX() -1, posicao.getPosicaoY() );
+			movimente = new Posicao(posicao.getPosicaoX() - 1, posicao.getPosicaoY());
+			break;
 		case BAIXO:
-			return new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY() -1);
+			movimente = new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY() - 1);
+			break;
 		default:
-			return new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY());
+			movimente = new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY());
+			break;
 		}
+
+		if (super.isExtremo(labirinto, movimente)) {
+			return game(labirinto, ++direcaoMovimentacao);
+		}
+		Cenario elementoCenario = labirinto.getCenario()[movimente.getPosicaoX()][movimente.getPosicaoY()];
+		if (isMove(elementoCenario)) {
+			if (elementoCenario instanceof Substancia) {
+				Substancia substanciaComestivel = (Substancia) elementoCenario;
+				if (substanciaComestivel instanceof Veneno) {
+					return game(labirinto, ++direcaoMovimentacao);
+				}
+			}
+		}
+		qPosicaos.push(movimente);
+		LOG.info("Retornando " + movimente.toString());
+
+		if (qPosicaos.size() > 16) {
+			return qPosicaos.firstElement();
+		}
+		return movimente;
+
 	}
 
 }

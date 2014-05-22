@@ -22,6 +22,7 @@ public class App {
 	private static final Logger LOG = Logger.getLogger(App.class);
 
 	public static void main(String[] args) {
+		
 		LOG.debug("Start da Aplicação");
 		Labirinto labirinto = null;
 		File arquivoEntrada = null;

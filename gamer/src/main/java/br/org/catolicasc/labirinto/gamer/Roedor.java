@@ -2,27 +2,31 @@ package br.org.catolicasc.labirinto.gamer;
 
 import org.apache.log4j.Logger;
 
-import br.org.catolicasc.labirinto.core.Controle;
 import br.org.catolicasc.labirinto.core.cobaia.Cobaia;
 import br.org.catolicasc.labirinto.core.regra.Energia;
 import br.org.catolicasc.labirinto.view.Labirinto;
 import br.org.catolicasc.labirinto.view.elemento.Cenario;
 import br.org.catolicasc.labirinto.view.elemento.EnumElementoCenario;
+import br.org.catolicasc.labirinto.view.elemento.Estrutura;
 import br.org.catolicasc.labirinto.view.elemento.Posicao;
+import br.org.catolicasc.labirinto.view.elemento.Remedio;
 import br.org.catolicasc.labirinto.view.elemento.Substancia;
+import br.org.catolicasc.labirinto.view.elemento.Veneno;
 
 /**
  * Classe abstrata de rato que vai implementar uma cobaia
+ * 
  * @author matheus.baade
- *
+ * 
  */
 public abstract class Roedor implements Cobaia {
 
 	static final int ENERGIAMUTACAO = 30;
 	private static final Logger LOG = Logger.getLogger(Roedor.class);
-	
+
 	/**
 	 * Construtor da classe
+	 * 
 	 * @param posicao
 	 */
 	public Roedor(Posicao posicao) {
@@ -35,16 +39,18 @@ public abstract class Roedor implements Cobaia {
 	 * Ação do rato
 	 */
 	public Posicao make(Labirinto labirinto, int isPossibleContinue) {
-		Posicao movimente = this.game(labirinto, isPossibleContinue);
-		while (isExtremo(labirinto, movimente)) {
-			System.out.println("Loop");
-			movimente = this.game(labirinto, isPossibleContinue);
+		int direcaoMovimentacao = isPossibleContinue;
+		Posicao movimente = this.game(labirinto, direcaoMovimentacao);
+		if (isExtremo(labirinto, movimente)) {
+			return make(labirinto, ++direcaoMovimentacao);
 		}
 		Cenario elementoCenario = labirinto.getCenario()[movimente.getPosicaoX()][movimente.getPosicaoY()];
-		if (elementoCenario instanceof Substancia) {
-			Substancia substanciaComestivel = (Substancia) elementoCenario;
-			eat(substanciaComestivel);
-			executeMutacao();
+		if (isMove(elementoCenario)) {
+			if (elementoCenario instanceof Substancia) {
+				Substancia substanciaComestivel = (Substancia) elementoCenario;
+				eat(substanciaComestivel);
+				executeMutacao();
+			}
 		}
 		return movimente;
 	}
@@ -52,9 +58,9 @@ public abstract class Roedor implements Cobaia {
 	/**
 	 * Executa a mutação do rato
 	 */
-	private void executeMutacao() {
+	protected void executeMutacao() {
 		LOG.fatal(this.energia.getEnergia());
-		if (energia.getEnergia() >= ENERGIAMUTACAO) { //Removido número mágico
+		if (energia.getEnergia() >= ENERGIAMUTACAO) { // Removido número mágico
 			this.setElementoCenario(EnumElementoCenario.MUTACAO);
 		}
 	}
@@ -64,6 +70,7 @@ public abstract class Roedor implements Cobaia {
 
 	/**
 	 * Retorna a energia
+	 * 
 	 * @return
 	 */
 	public Energia getEnergia() {
@@ -71,7 +78,7 @@ public abstract class Roedor implements Cobaia {
 	}
 
 	/**
-	 * Retorna a posição 
+	 * Retorna a posição
 	 */
 	public Posicao getPosicao() {
 		return this.posicao;
@@ -105,11 +112,12 @@ public abstract class Roedor implements Cobaia {
 
 	/**
 	 * Verifica se é um extremo do labirinto a posição atual
+	 * 
 	 * @param labirinto
 	 * @param posicao
 	 * @return
 	 */
-	private boolean isExtremo(Labirinto labirinto, Posicao posicao) {
+	protected boolean isExtremo(Labirinto labirinto, Posicao posicao) {
 		boolean retorno = true;
 		if (posicao.getPosicaoX() <= labirinto.getCenario().length) {
 			if (posicao.getPosicaoY() <= labirinto.getCenario()[0].length) {
@@ -118,6 +126,24 @@ public abstract class Roedor implements Cobaia {
 		}
 
 		return retorno;
+	}
+
+	/**
+	 * Verifica se é possivel mover para aquela direção
+	 * 
+	 * @param cenario
+	 * @return
+	 */
+	protected boolean isMove(Cenario cenario) {
+		boolean retorno = true;
+		if (cenario instanceof Estrutura) {
+			Estrutura estrutura = (Estrutura) cenario;
+			if (estrutura.isObstaculo()) {
+				retorno = false;
+			}
+		}
+		return retorno;
+
 	}
 
 	public abstract void eat(Substancia substancia);

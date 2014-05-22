@@ -89,7 +89,7 @@ public class Controle {
 				isRunning = false;
 			}
 
-			new Scanner(System.in).nextLine();
+//			new Scanner(System.in).nextLine();
 		}
 	}
 

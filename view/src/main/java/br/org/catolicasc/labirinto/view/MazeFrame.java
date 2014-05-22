@@ -37,8 +37,6 @@ public class MazeFrame {
 	}
 
 	public void createFrame(Cenario[][] cenarios) throws IOException {
-		// PAREDE('#'), POSICAO_INICIAL('S'), SAIDA('E'), REMEDIO('C'),
-		// VENENO('T'), CORREDOR('.'), COBAIA('M'), MUTACAO('R');
 		GridLayout grid = new GridLayout(cenarios.length,cenarios[0].length);
 		JPanel panel = new JPanel(grid);
 		for (int i = 0; i < cenarios.length; i++) {
@@ -55,9 +53,11 @@ public class MazeFrame {
 				case 'T':
 					pathImage = "trap.png";
 					break;
-				case 'R':
 				case 'M':
 					pathImage = "mouse.png";
+					break;
+				case 'R':
+					pathImage = "mouseM.png";
 					break;
 
 				default:
