@@ -1,7 +1,6 @@
 package br.org.catolicasc.labirinto.core;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
@@ -26,7 +25,6 @@ public class Controle {
 	private Labirinto labirinto;
 	private Tela tela;
 	private DateTime tempoLimite;
-	ArrayList<int[]> memoryList = new ArrayList<int[]>();
 	static final int ESQUERDA = 0;
 	static final int SEMCAMINHO = 4;
 	static final int TEMPOLIMITE = 5;
@@ -65,11 +63,10 @@ public class Controle {
 			posicaoMovimentacao = cobaia.make(this.labirinto, direcaoMovimentacao);
 			direcaoMovimentacao++;
 			Cenario elementoCenarioPosicaoMovimentacao = getCenarioPosicao(cenarioCompleto, posicaoMovimentacao);
-			if (isMove(elementoCenarioPosicaoMovimentacao)
-					&& !isInMemory(elementoCenarioPosicaoMovimentacao.getPosicao().getPosicaoX(), elementoCenarioPosicaoMovimentacao.getPosicao().getPosicaoY())) {
+			if (isMove(elementoCenarioPosicaoMovimentacao)) {
+//				&& !isInMemory(elementoCenarioPosicaoMovimentacao.getPosicao().getPosicaoX(), elementoCenarioPosicaoMovimentacao.getPosicao().getPosicaoY())) {
 				// isPossibleContinue--;
 				cenarioCompleto = executeMove(cenarioCompleto, posicaoAtual, posicaoMovimentacao);
-				this.memoryList.add(new int[] { posicaoAtual.getPosicaoX(), posicaoAtual.getPosicaoY() });
 				posicaoAtual = posicaoMovimentacao;
 			}
 
@@ -150,24 +147,6 @@ public class Controle {
 		}
 		return retorno;
 
-	}
-
-	/**
-	 * Verifica se ja passou por aquele local
-	 * 
-	 * @param posX
-	 * @param posY
-	 * @return
-	 */
-	private boolean isInMemory(int posX, int posY) {
-
-		for (int i = 0; i < this.memoryList.size(); i++) {
-			if (this.memoryList.get(i)[0] == posX && this.memoryList.get(i)[1] == posY) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 }

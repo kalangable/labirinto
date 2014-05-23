@@ -50,5 +50,32 @@ public class Posicao {
 
 	private int posicaoX;
 	private int posicaoY;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + posicaoX;
+		result = prime * result + posicaoY;
+		return result;
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Posicao other = (Posicao) obj;
+		if (posicaoX != other.posicaoX)
+			return false;
+		if (posicaoY != other.posicaoY)
+			return false;
+		return true;
+	}
+
+	
+	
+	
 }

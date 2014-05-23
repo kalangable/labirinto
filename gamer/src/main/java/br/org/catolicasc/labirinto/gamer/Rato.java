@@ -1,7 +1,6 @@
 package br.org.catolicasc.labirinto.gamer;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
+import java.util.ArrayList;
 import java.util.Stack;
 
 import javax.swing.JOptionPane;
@@ -22,7 +21,7 @@ public class Rato extends Roedor {
 	static final int BAIXO = 1;
 	static final int DIREITA = 2;
 	static final int CIMA = 3;
-
+	ArrayList<int[]> memoryList = new ArrayList<int[]>();
 	private Stack<Posicao> qPosicaos = new Stack<Posicao>();
 
 	public Rato(Posicao posicao) {
@@ -56,20 +55,28 @@ public class Rato extends Roedor {
 
 		LOG.info(isPossibleContinue);
 
+		if(isPossibleContinue > CIMA){
+			qPosicaos.pop();
+			qPosicaos.pop();
+			qPosicaos.pop();
+			qPosicaos.pop();
+			return qPosicaos.pop();
+		}
+		
 		int direcaoMovimentacao = isPossibleContinue;
 		Posicao movimente = null;
 		switch (direcaoMovimentacao) {
 		case ESQUERDA:
-			movimente = new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY() + 1);
+			movimente = new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY() - 1);
 			break;
 		case CIMA:
 			movimente = new Posicao(posicao.getPosicaoX() + 1, posicao.getPosicaoY());
 			break;
 		case DIREITA:
-			movimente = new Posicao(posicao.getPosicaoX() - 1, posicao.getPosicaoY());
+			movimente = new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY() + 1);
 			break;
 		case BAIXO:
-			movimente = new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY() - 1);
+			movimente = new Posicao(posicao.getPosicaoX() - 1, posicao.getPosicaoY());
 			break;
 		default:
 			movimente = new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY());
@@ -88,14 +95,20 @@ public class Rato extends Roedor {
 				}
 			}
 		}
-		qPosicaos.push(movimente);
-		LOG.info("Retornando " + movimente.toString());
-
-		if (qPosicaos.size() > 16) {
-			return qPosicaos.firstElement();
+		
+		
+		
+		if (qPosicaos.contains(movimente)){
+			for (Posicao dados : qPosicaos) {
+				System.out.println(dados.getPosicaoX() +" - "+dados.getPosicaoY());
+			}
+			return game(labirinto, ++direcaoMovimentacao);
 		}
+		
+		
+		qPosicaos.push(movimente);
 		return movimente;
 
 	}
-
+	
 }

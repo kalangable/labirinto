@@ -9,9 +9,7 @@ import br.org.catolicasc.labirinto.view.elemento.Cenario;
 import br.org.catolicasc.labirinto.view.elemento.EnumElementoCenario;
 import br.org.catolicasc.labirinto.view.elemento.Estrutura;
 import br.org.catolicasc.labirinto.view.elemento.Posicao;
-import br.org.catolicasc.labirinto.view.elemento.Remedio;
 import br.org.catolicasc.labirinto.view.elemento.Substancia;
-import br.org.catolicasc.labirinto.view.elemento.Veneno;
 
 /**
  * Classe abstrata de rato que vai implementar uma cobaia
@@ -39,7 +37,7 @@ public abstract class Roedor implements Cobaia {
 	 * Ação do rato
 	 */
 	public Posicao make(Labirinto labirinto, int isPossibleContinue) {
-		int direcaoMovimentacao = isPossibleContinue;
+		int direcaoMovimentacao = 0;
 		Posicao movimente = this.game(labirinto, direcaoMovimentacao);
 		if (isExtremo(labirinto, movimente)) {
 			return make(labirinto, ++direcaoMovimentacao);
