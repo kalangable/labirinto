@@ -46,12 +46,6 @@ public class Tela {
 			// TODO Auto-generated catch block
 			LOG.fatal(e);
 		}
-//		for (Cenario[] cenarioX : labirinto.getCenario()) {
-//			for (Cenario cenario : cenarioX) {
-//				System.out.print(cenario.getElemento().getCaracter());
-//			}
-//			System.out.println();
-//		}
 	}
 
 }
