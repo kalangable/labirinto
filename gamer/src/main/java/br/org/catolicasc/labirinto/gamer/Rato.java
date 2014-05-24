@@ -22,7 +22,7 @@ public class Rato extends Roedor {
 	static final int DIREITA = 2;
 	static final int CIMA = 3;
 	ArrayList<int[]> memoryList = new ArrayList<int[]>();
-	private Stack<Posicao> qPosicaos = new Stack<Posicao>();
+	private Stack<Posicao> memoria = new Stack<Posicao>();
 
 	public Rato(Posicao posicao) {
 		super(posicao);
@@ -51,21 +51,48 @@ public class Rato extends Roedor {
 	}
 
 	@Override
-	public Posicao game(Labirinto labirinto, int isPossibleContinue) {
+	public Posicao game(Labirinto labirinto, EnumAcaoCaminhar caminhar, int direcao) {
 
-		LOG.info(isPossibleContinue);
+		LOG.info(direcao + " - " + caminhar);
 
-		if(isPossibleContinue > CIMA){
-			qPosicaos.pop();
-			qPosicaos.pop();
-			qPosicaos.pop();
-			qPosicaos.pop();
-			return qPosicaos.pop();
+		int direcaoMovimentacao = verificarDirecao(caminhar, direcao);
+
+		if (direcaoMovimentacao > CIMA) {
+			return game(labirinto, EnumAcaoCaminhar.TRAZ, direcaoMovimentacao);
 		}
-		
-		int direcaoMovimentacao = isPossibleContinue;
+
+		if (direcaoMovimentacao < ESQUERDA) {
+			memoria.pop();
+			return game(labirinto, caminhar, CIMA);
+		}
+
+		Posicao movimente = getPosicaoDirecao(direcaoMovimentacao);
+
+		if (super.isExtremo(labirinto, movimente)) {
+			return game(labirinto, caminhar, direcaoMovimentacao);
+		}
+		Cenario elementoCenario = labirinto.getCenario()[movimente.getPosicaoX()][movimente.getPosicaoY()];
+		if (isMove(elementoCenario)) {
+			if (elementoCenario instanceof Substancia) {
+				Substancia substanciaComestivel = (Substancia) elementoCenario;
+				if (substanciaComestivel instanceof Veneno) {
+					return game(labirinto, caminhar, direcaoMovimentacao);
+				}
+			}
+		}
+
+		if (memoria.contains(movimente)) {
+			return game(labirinto, caminhar, direcaoMovimentacao);
+		}
+
+		memoria.push(movimente);
+		return movimente;
+
+	}
+
+	private Posicao getPosicaoDirecao(int direcao) {
 		Posicao movimente = null;
-		switch (direcaoMovimentacao) {
+		switch (direcao) {
 		case ESQUERDA:
 			movimente = new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY() - 1);
 			break;
@@ -82,33 +109,16 @@ public class Rato extends Roedor {
 			movimente = new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY());
 			break;
 		}
-
-		if (super.isExtremo(labirinto, movimente)) {
-			return game(labirinto, ++direcaoMovimentacao);
-		}
-		Cenario elementoCenario = labirinto.getCenario()[movimente.getPosicaoX()][movimente.getPosicaoY()];
-		if (isMove(elementoCenario)) {
-			if (elementoCenario instanceof Substancia) {
-				Substancia substanciaComestivel = (Substancia) elementoCenario;
-				if (substanciaComestivel instanceof Veneno) {
-					return game(labirinto, ++direcaoMovimentacao);
-				}
-			}
-		}
-		
-		
-		
-		if (qPosicaos.contains(movimente)){
-			for (Posicao dados : qPosicaos) {
-				System.out.println(dados.getPosicaoX() +" - "+dados.getPosicaoY());
-			}
-			return game(labirinto, ++direcaoMovimentacao);
-		}
-		
-		
-		qPosicaos.push(movimente);
 		return movimente;
-
 	}
-	
+
+	private int verificarDirecao(EnumAcaoCaminhar caminhar, int direcao) {
+		if (caminhar.equals(EnumAcaoCaminhar.FRENTE)) {
+			return direcao += 1;
+		} else if (caminhar.equals(EnumAcaoCaminhar.TRAZ)) {
+			return direcao -= 1;
+		}
+		return direcao;
+	}
+
 }
