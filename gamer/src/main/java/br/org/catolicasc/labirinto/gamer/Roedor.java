@@ -114,8 +114,8 @@ public abstract class Roedor implements Cobaia {
 	 */
 	protected boolean isExtremo(Labirinto labirinto, Posicao posicao) {
 		boolean retorno = true;
-		if (posicao.getPosicaoX() <= labirinto.getCenario().length) {
-			if (posicao.getPosicaoY() <= labirinto.getCenario()[0].length) {
+		if (posicao.getPosicaoX() < labirinto.getCenario().length) {
+			if (posicao.getPosicaoY() < labirinto.getCenario()[0].length) {
 				retorno = false;
 			}
 		}
@@ -133,9 +133,7 @@ public abstract class Roedor implements Cobaia {
 		boolean retorno = true;
 		if (cenario instanceof Estrutura) {
 			Estrutura estrutura = (Estrutura) cenario;
-			if (estrutura.isObstaculo()) {
-				retorno = false;
-			}
+			retorno = !estrutura.isObstaculo();		
 		}
 		return retorno;
 

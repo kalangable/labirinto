@@ -1,6 +1,7 @@
 package br.org.catolicasc.labirinto.gamer;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 import javax.swing.JOptionPane;
@@ -21,7 +22,10 @@ public class Rato extends Roedor {
 	static final int BAIXO = 1;
 	static final int DIREITA = 2;
 	static final int CIMA = 3;
-	ArrayList<int[]> memoryList = new ArrayList<int[]>();
+
+	private EnumDirecao ultimaAcao = null;
+
+	Map<Posicao, PosicaoHistorico> posicaoHistorico = new HashMap<>();
 	private Stack<Posicao> memoria = new Stack<Posicao>();
 
 	public Rato(Posicao posicao) {
@@ -50,75 +54,167 @@ public class Rato extends Roedor {
 		}
 	}
 
-	@Override
-	public Posicao game(Labirinto labirinto, EnumAcaoCaminhar caminhar, int direcao) {
+	Posicao games(Labirinto labirinto, EnumDirecao direcao) {
+		Posicao movimente = getPosicaoDirecao(direcao);
 
-		LOG.info(direcao + " - " + caminhar);
-
-		int direcaoMovimentacao = verificarDirecao(caminhar, direcao);
-
-		if (direcaoMovimentacao > CIMA) {
-			return game(labirinto, EnumAcaoCaminhar.TRAZ, direcaoMovimentacao);
+		if (!memoria.isEmpty() && posicaoHistorico.containsKey(movimente)) {
+			if (posicaoHistorico.get(movimente).isInvalido()) {
+				return memoria.pop();
+			}
 		}
 
-		if (direcaoMovimentacao < ESQUERDA) {
-			memoria.pop();
-			return game(labirinto, caminhar, CIMA);
+		if (super.posicao.equals(movimente)) {
+			return games(labirinto, novaDirecao(direcao));
 		}
-
-		Posicao movimente = getPosicaoDirecao(direcaoMovimentacao);
 
 		if (super.isExtremo(labirinto, movimente)) {
-			return game(labirinto, caminhar, direcaoMovimentacao);
+			return games(labirinto, novaDirecao(direcao));
 		}
+
 		Cenario elementoCenario = labirinto.getCenario()[movimente.getPosicaoX()][movimente.getPosicaoY()];
+
 		if (isMove(elementoCenario)) {
 			if (elementoCenario instanceof Substancia) {
 				Substancia substanciaComestivel = (Substancia) elementoCenario;
 				if (substanciaComestivel instanceof Veneno) {
-					return game(labirinto, caminhar, direcaoMovimentacao);
+					return games(labirinto, novaDirecao(direcao));
 				}
 			}
+		} else {
+			return games(labirinto, novaDirecao(direcao));
 		}
 
 		if (memoria.contains(movimente)) {
-			return game(labirinto, caminhar, direcaoMovimentacao);
+			return games(labirinto, novaDirecao(direcao));
 		}
-
-		memoria.push(movimente);
-		return movimente;
-
+		ultimaAcao = direcao;
+		return memoria.push(movimente);
 	}
 
-	private Posicao getPosicaoDirecao(int direcao) {
-		Posicao movimente = null;
+	EnumDirecao novaDirecao(EnumDirecao direcao) {
 		switch (direcao) {
 		case ESQUERDA:
-			movimente = new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY() - 1);
-			break;
-		case CIMA:
-			movimente = new Posicao(posicao.getPosicaoX() + 1, posicao.getPosicaoY());
-			break;
-		case DIREITA:
-			movimente = new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY() + 1);
-			break;
+			return EnumDirecao.BAIXO;
 		case BAIXO:
-			movimente = new Posicao(posicao.getPosicaoX() - 1, posicao.getPosicaoY());
-			break;
+			return EnumDirecao.DIREITA;
+		case DIREITA:
+			return EnumDirecao.CIMA;
 		default:
-			movimente = new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY());
-			break;
+			return EnumDirecao.ESQUERDA;
 		}
-		return movimente;
 	}
 
-	private int verificarDirecao(EnumAcaoCaminhar caminhar, int direcao) {
-		if (caminhar.equals(EnumAcaoCaminhar.FRENTE)) {
-			return direcao += 1;
-		} else if (caminhar.equals(EnumAcaoCaminhar.TRAZ)) {
-			return direcao -= 1;
+	@Override
+	public Posicao game(Labirinto labirinto, EnumAcaoCaminhar caminhar, int direcao) {
+
+		if (ultimaAcao == null) {
+			ultimaAcao = EnumDirecao.CIMA;
 		}
-		return direcao;
+		return games(labirinto, ultimaAcao);/*
+											 * 
+											 * LOG.info(direcao + " - " +
+											 * caminhar);
+											 * 
+											 * int direcaoMovimentacao =
+											 * verificarDirecao (caminhar,
+											 * direcao);
+											 * 
+											 * if (direcaoMovimentacao > CIMA) {
+											 * return game(labirinto,
+											 * EnumAcaoCaminhar.TRAZ,
+											 * direcaoMovimentacao); }
+											 * 
+											 * if (direcaoMovimentacao <
+											 * ESQUERDA) { memoria.pop(); return
+											 * game(labirinto, caminhar, CIMA);
+											 * }
+											 * 
+											 * Posicao movimente =
+											 * getPosicaoDirecao
+											 * (direcaoMovimentacao);
+											 * 
+											 * if (super.isExtremo(labirinto ,
+											 * movimente)) { return
+											 * game(labirinto, caminhar,
+											 * direcaoMovimentacao); } Cenario
+											 * elementoCenario = labirinto
+											 * .getCenario()[movimente
+											 * .getPosicaoX ()][movimente.
+											 * getPosicaoY()]; if
+											 * (isMove(elementoCenario)) { if
+											 * (elementoCenario instanceof
+											 * Substancia) { Substancia
+											 * substanciaComestivel =
+											 * (Substancia) elementoCenario; if
+											 * (substanciaComestivel instanceof
+											 * Veneno) { return game(labirinto,
+											 * caminhar, direcaoMovimentacao); }
+											 * } } else { PosicaoHistorico
+											 * posHis = posicaoHistorico.
+											 * remove(super.posicao); switch
+											 * (direcao) { case ESQUERDA:
+											 * posHis.setEsquerda (false);
+											 * break; case CIMA:
+											 * posHis.setCima(false); break;
+											 * case DIREITA:
+											 * posHis.setDireita(false); break;
+											 * default: posHis.setBaixo(false);
+											 * break; } posicaoHistorico.
+											 * put(super.posicao, posHis); }
+											 * 
+											 * if (memoria.contains(movimente ))
+											 * { return game(labirinto,
+											 * caminhar, direcaoMovimentacao); }
+											 * 
+											 * memoria.push(movimente);
+											 * 
+											 * return movimente;
+											 */
+
+	}
+
+	private Posicao getPosicaoDirecao(EnumDirecao direcao) {
+
+		Posicao movimente = null;
+
+		PosicaoHistorico posicaoHis = null;
+		if (!posicaoHistorico.containsKey(super.posicao)) {
+			posicaoHistorico.put(new Posicao(posicao.getPosicaoX(), posicao.getPosicaoY()), new PosicaoHistorico());
+		}
+		posicaoHis = posicaoHistorico.get(super.posicao);
+
+		switch (direcao) {
+		case ESQUERDA:
+			if (posicaoHis.isEsquerda()) {
+				return getPosicaoDirecao(novaDirecao(direcao));
+			}
+			movimente = new Posicao(super.posicao.getPosicaoX(), super.posicao.getPosicaoY() - 1);
+			posicaoHis.setEsquerda(true);
+			break;
+		case CIMA:
+			if (posicaoHis.isCima()) {
+				return getPosicaoDirecao(novaDirecao(direcao));
+			}
+			movimente = new Posicao(super.posicao.getPosicaoX() + 1, super.posicao.getPosicaoY());
+			posicaoHis.setCima(true);
+			break;
+		case DIREITA:
+			if (posicaoHis.isDireita()) {
+				return getPosicaoDirecao(novaDirecao(direcao));
+			}
+			movimente = new Posicao(super.posicao.getPosicaoX(), super.posicao.getPosicaoY() + 1);
+			posicaoHis.setDireita(true);
+			break;
+		case BAIXO:
+			if (posicaoHis.isBaixo()) {
+				return super.posicao;
+			}
+			movimente = new Posicao(super.posicao.getPosicaoX() - 1, super.posicao.getPosicaoY());
+			posicaoHis.setBaixo(true);
+			break;
+		}
+		// posicaoHistorico.put(super.posicao, posicaoHis);
+		return movimente;
 	}
 
 }

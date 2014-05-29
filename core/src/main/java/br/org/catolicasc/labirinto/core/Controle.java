@@ -27,7 +27,7 @@ public class Controle {
 	private DateTime tempoLimite;
 	static final int ESQUERDA = 0;
 	static final int SEMCAMINHO = 4;
-	static final int TEMPOLIMITE = 5;
+	static final int TEMPOLIMITE = 50;
 
 	/**
 	 * É criada a cobaia, labirinto e o contador, chamando a execução
