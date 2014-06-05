@@ -37,8 +37,8 @@ public class FactoryLabirinto {
 				cenarioCompleto[i][j] = FactoryElementoCenario.createElemento(caracter, posicao);
 				if (EnumElementoCenario.POSICAO_INICIAL.getCaracter() == caracter) {
 					labirinto.setBegin(posicao);
-				} else if (EnumElementoCenario.POSICAO_INICIAL.getCaracter() == caracter) {
-					labirinto.setBegin(posicao);
+				} else if (EnumElementoCenario.SAIDA.getCaracter() == caracter) {
+					labirinto.setExit(posicao);
 				}
 			}
 		}

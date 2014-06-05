@@ -70,6 +70,11 @@ public class Rato extends Roedor {
 		if (super.isExtremo(labirinto, movimente)) {
 			return games(labirinto, novaDirecao(direcao));
 		}
+		
+		if(movimente.equals(labirinto.getExit())){
+			celebrate();
+		}
+		else{
 
 		Cenario elementoCenario = labirinto.getCenario()[movimente.getPosicaoX()][movimente.getPosicaoY()];
 
@@ -87,8 +92,10 @@ public class Rato extends Roedor {
 		if (memoria.contains(movimente)) {
 			return games(labirinto, novaDirecao(direcao));
 		}
+		}
 		ultimaAcao = direcao;
 		return memoria.push(movimente);
+		
 	}
 
 	EnumDirecao novaDirecao(EnumDirecao direcao) {
