@@ -25,7 +25,19 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		  <plugins>
+			 <plugin>
+      				<groupId>org.sonatype.plugins</groupId>
+      				<artifactId>nexus-staging-maven-plugin</artifactId>
+      				<version>1.6.0</version>
+      				<extensions>true</extensions>
+      				<configuration>
+					<serverId>local-nexus</serverId>
+				 	<nexusUrl>http://localhost:8080/nexus/</nexusUrl>
+      				</configuration>
+    		</plugin>
 	</build>
+	
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
