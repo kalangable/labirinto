@@ -34,7 +34,8 @@
 					<serverId>local-nexus</serverId>
 				 	<nexusUrl>http://localhost:8080/nexus/</nexusUrl>
       				</configuration>
-    		</plugin>
+    			</plugin>
+    		</plugins>
 	</build>
 	
 	<dependencies>
